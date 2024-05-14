@@ -1,0 +1,41 @@
+.main {
+    padding: 5rem;
+    padding-top: 0;
+}
+
+.striped_bg {
+    background-image: repeating-linear-gradient(45deg, var(--fallback-b1, oklch(var(--b1))), var(--fallback-b1, oklch(var(--b1))) 13px, var(--fallback-b2, oklch(var(--b2))) 13px, var(--fallback-b2, oklch(var(--b2))) 14px);
+    background-size: 40px 40px;
+}
+
+.browse_a:hover {
+    cursor: pointer;
+}
+
+.abs-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.hidden {
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.removed {
+    opacity: 0;
+    position: absolute !important;
+}
+
+.topbar_input {
+    margin-right: 0.5rem;
+}
+.topbar_input input {
+    max-width: 10vw;
+}
+
+.input-disabled {
+    z-index: -1;
+}
