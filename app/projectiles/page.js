@@ -2,14 +2,25 @@
 import React, { useEffect, useState } from "react";
 import TopBar from "../components/topbar/topbar";
 import styles from '../modulestyle/maker.module.css';
-import { ArrowsPointingOutIcon, ChevronDownIcon, ChevronUpIcon, CubeIcon, FolderIcon, PencilIcon } from '@heroicons/react/24/solid';
+import { ArrowsPointingInIcon, ArrowsPointingOutIcon, ArrowsRightLeftIcon, BoltIcon, ChevronDownIcon, ChevronUpIcon, CubeIcon, FolderIcon, PencilIcon, ScissorsIcon, WrenchIcon } from '@heroicons/react/24/solid';
 
-function generateProjectiles(projectile_data, directions){
+function generateProjectiles(projectile_name, directions){
     var result = ``
     var angleIncrement = (2 * Math.PI) / directions
 
     for(var i = 0; i < directions; i++){
-        var data_to_add = projectile_data
+        var data_to_add = 
+`{
+    "projectile" : "${projectile_name}",
+    "formula" : "0",
+    "damage" : 1,
+    "piercing" : false,
+    "wait" : 0,
+    "speed" : 2,
+    "tile_range" : 3,
+    "direction" : Vector2(0,0),
+    "size" : 4
+}`
 
         var angle = i * angleIncrement
         var x = Math.round(Math.sin(angle)*1000)/1000
@@ -39,17 +50,17 @@ function downloadFile(data){
 export default function ConfigMaker() {
     const [downloadDropdownOpen, setDDDO] = useState(false)
 
-    const [directions, setDirections] = useState(8)
-    const [projectileData, setProjectileData] = useState("")
+    const [directions, setDirections] = useState()
+    const [projectile, setProjectile] = useState("")
 
     function downloadConfig(config){
-        if(config == 0) downloadFile(generateProjectiles(projectileData, directions))
+        if(config == 0) downloadFile(generateProjectiles(projectile, directions))
         setDDDO(false)
     }
 
     //handle changes from input section
     const handleProjectileChange = (event) => {
-        setProjectileData(event.target.value);
+        setProjectile(event.target.value);
     };
     const handleDirectionsChange = (event) => {
         setDirections(event.target.value);
@@ -76,21 +87,11 @@ export default function ConfigMaker() {
                 <div className="w-full flex items-center p-3">
                     <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
                         <PencilIcon className="w-4 h-4 opacity-70" />
-                        Projectile Data
-                        <textarea id="item_id" type="text" className="grow" placeholder={`{
-	"projectile" : "Wave",
-	"formula" : "sin(x)",
-	"damage" : 2,
-	"piercing" : false,
-	"wait" : 0,
-	"speed" : 2,
-	"tile_range" : 3,
-	"direction" : Vector2(1,1),
-	"size" : 7
-}`} value={projectileData} onChange={handleProjectileChange}/>
+                        Projectile
+                        <input id="item_namespace" type="text" className="grow" placeholder="Wave" value={projectile} onChange={handleProjectileChange} />
                     </label>
                     <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
-                        <ArrowsPointingOutIcon className="w-4 h-4 opacity-70" />
+                        <ArrowsRightLeftIcon className="w-4 h-4 opacity-70" />
                         Directions
                         <input id="item_namespace" type="number" className="grow" placeholder="8" value={directions} onChange={handleDirectionsChange} />
                     </label>
