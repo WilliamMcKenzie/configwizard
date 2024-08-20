@@ -83,9 +83,6 @@ export default function ConfigMaker() {
                       <p>{file.name}</p>
                       {/* <p>{file.type}</p> */}
                     </div>
-                    <div className="file-actions">
-                      <MdClear onClick={() => handleRemoveFile(index)} />
-                    </div>
                   </div>
                 ))}
               </div>
@@ -94,9 +91,6 @@ export default function ConfigMaker() {
   
           {files.length > 0 && (
             <div className="success-file">
-              <AiOutlineCheckCircle
-                style={{ color: "#6DC24B", marginRight: 1 }}
-              />
               <p>{files.length} file(s) selected</p>
             </div>
           )}
