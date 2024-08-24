@@ -4,7 +4,7 @@ import TopBar from "../components/topbar/topbar";
 import styles from '../modulestyle/maker.module.css';
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon, ArrowsRightLeftIcon, BoltIcon, ChevronDownIcon, ChevronUpIcon, CubeIcon, FolderIcon, PencilIcon, ScissorsIcon, WrenchIcon } from '@heroicons/react/24/solid';
 
-function generateProjectiles(projectile_name, directions){
+function generateProjectiles(projectile_name, directions, damage, speed, range, size){
     var result = ``
     var angleIncrement = (2 * Math.PI) / directions
 
@@ -13,14 +13,14 @@ function generateProjectiles(projectile_name, directions){
 `{
     "projectile" : "${projectile_name}",
     "formula" : "0",
-    "damage" : 1,
+    "damage" : ${damage},
     "piercing" : false,
     "wait" : 0,
-    "speed" : 2,
-    "tile_range" : 3,
+    "speed" : ${speed},
+    "tile_range" : ${range},
     "direction" : Vector2(0,0),
-    "size" : 4
-}`
+    "size" : ${size}
+},`
 
         var angle = i * angleIncrement
         var x = Math.round(Math.sin(angle)*1000)/1000
@@ -53,8 +53,13 @@ export default function ConfigMaker() {
     const [directions, setDirections] = useState()
     const [projectile, setProjectile] = useState("")
 
+    const [damage, setDamage] = useState()
+    const [speed, setSpeed] = useState()
+    const [range, setRange] = useState()
+    const [size, setSize] = useState()
+
     function downloadConfig(config){
-        if(config == 0) downloadFile(generateProjectiles(projectile, directions))
+        if(config == 0) downloadFile(generateProjectiles(projectile, directions, damage, speed, range, size))
         setDDDO(false)
     }
 
@@ -84,7 +89,7 @@ export default function ConfigMaker() {
         <main className={styles.main}>
             <TopBar />
             <div className="w-full">
-                <div className="w-full flex items-center p-3">
+            <div className="w-full flex items-center p-3">
                     <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
                         <PencilIcon className="w-4 h-4 opacity-70" />
                         Projectile
@@ -96,6 +101,28 @@ export default function ConfigMaker() {
                         <input id="item_namespace" type="number" className="grow" placeholder="8" value={directions} onChange={handleDirectionsChange} />
                     </label>
                     <DownloadDropdown />
+                </div>
+                <div className="w-full flex items-center p-3">
+                    <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
+                        <ArrowsRightLeftIcon className="w-4 h-4 opacity-70" />
+                        Damage
+                        <input id="item_namespace" type="number" className="grow" placeholder="8" value={damage} onChange={(event) => {setDamage(event.target.value)}} />
+                    </label>
+                    <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
+                        <ArrowsRightLeftIcon className="w-4 h-4 opacity-70" />
+                        Speed
+                        <input id="item_namespace" type="number" className="grow" placeholder="8" value={speed} onChange={(event) => {setSpeed(event.target.value)}} />
+                    </label>
+                    <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
+                        <ArrowsRightLeftIcon className="w-4 h-4 opacity-70" />
+                        Range
+                        <input id="item_namespace" type="number" className="grow" placeholder="8" value={range} onChange={(event) => {setRange(event.target.value)}} />
+                    </label>
+                    <label className={`${styles.topbar_input} input input-bordered flex items-center gap-2`}>
+                        <ArrowsRightLeftIcon className="w-4 h-4 opacity-70" />
+                        Size
+                        <input id="item_namespace" type="number" className="grow" placeholder="8" value={size} onChange={(event) => {setSize(event.target.value)}} />
+                    </label>
                 </div>
             </div>
         </main>
